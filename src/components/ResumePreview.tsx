@@ -9,7 +9,7 @@ export default function ResumePreview() {
 
   return (
     <div className="flex h-full items-start justify-center overflow-y-auto bg-muted/50 p-6">
-      <div className="w-[595px] min-h-[842px] bg-white shadow-elevated rounded-sm" id="resume-preview">
+      <div className="w-[210mm] min-h-[297mm] bg-white shadow-elevated rounded-sm" id="resume-preview" style={{ aspectRatio: '210 / 297' }}>
         <TemplateRenderer data={resumeData} config={config} showWatermark={showWatermark} />
       </div>
     </div>

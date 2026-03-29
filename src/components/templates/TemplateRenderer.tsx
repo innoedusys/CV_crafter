@@ -141,8 +141,8 @@ function SingleColumnLayout({ data, config, showWatermark }: Props) {
 
   return (
     <div
-      className={`resume-content ${gap} ${padding} text-[11px] leading-relaxed`}
-      style={{ backgroundColor: isDark ? '#1e293b' : '#fff', fontFamily: "'DM Sans', sans-serif" }}
+      className={`resume-content flex flex-col ${padding} text-[11px] leading-relaxed`}
+      style={{ backgroundColor: isDark ? '#1e293b' : '#fff', fontFamily: "'DM Sans', sans-serif", minHeight: '297mm' }}
     >
       {/* Accent bar for creative-accent */}
       {config.id === 'creative-accent' && (
@@ -159,11 +159,13 @@ function SingleColumnLayout({ data, config, showWatermark }: Props) {
           <ContactInfo data={data} config={config} />
         </div>
       </div>
-      <SummarySection data={data} config={config} />
-      <ExperienceSection data={data} config={config} />
-      <EducationSection data={data} config={config} />
-      <SkillsSection data={data} config={config} />
-      {showWatermark && <p className="pt-4 text-center text-[9px]" style={{ color: config.colors.muted }}>Created with ResumeForge</p>}
+      <div className={`${gap} flex-1`}>
+        <SummarySection data={data} config={config} />
+        <ExperienceSection data={data} config={config} />
+        <EducationSection data={data} config={config} />
+        <SkillsSection data={data} config={config} />
+      </div>
+      {showWatermark && <p className="mt-auto pt-4 text-center text-[9px]" style={{ color: config.colors.muted }}>Created with ResumeForge</p>}
     </div>
   );
 }
@@ -215,7 +217,7 @@ function SidebarLayout({ data, config, showWatermark }: Props) {
   );
 
   return (
-    <div className="resume-content flex text-[11px] leading-relaxed" style={{ minHeight: '100%' }}>
+    <div className="resume-content flex text-[11px] leading-relaxed" style={{ minHeight: '297mm' }}>
       {isRight ? <>{main}{sidebar}</> : <>{sidebar}{main}</>}
     </div>
   );
@@ -229,7 +231,7 @@ function TopHeaderLayout({ data, config, showWatermark }: Props) {
   const nameSize = config.style.nameSize === '2xl' ? 'text-2xl' : config.style.nameSize === 'xl' ? 'text-xl' : 'text-lg';
 
   return (
-    <div className="resume-content text-[11px] leading-relaxed" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+    <div className="resume-content flex flex-col text-[11px] leading-relaxed" style={{ fontFamily: "'DM Sans', sans-serif", minHeight: '297mm' }}>
       <div className="p-8 text-center" style={{ backgroundColor: headerBg, color: headerText }}>
         <h1 className={`${nameSize} font-bold tracking-tight`}>
           {data.personalInfo.fullName || 'Your Name'}
@@ -242,13 +244,13 @@ function TopHeaderLayout({ data, config, showWatermark }: Props) {
           {data.personalInfo.website && <span>{data.personalInfo.website}</span>}
         </div>
       </div>
-      <div className={`${density} p-8`}>
+      <div className={`${density} flex-1 p-8`}>
         <SummarySection data={data} config={config} />
         <ExperienceSection data={data} config={config} />
         <EducationSection data={data} config={config} />
         <SkillsSection data={data} config={config} />
-        {showWatermark && <p className="pt-4 text-center text-[9px]" style={{ color: config.colors.muted }}>Created with ResumeForge</p>}
       </div>
+      {showWatermark && <p className="p-8 pt-0 text-center text-[9px]" style={{ color: config.colors.muted }}>Created with ResumeForge</p>}
     </div>
   );
 }
