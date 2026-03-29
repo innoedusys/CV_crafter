@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useResume } from '@/contexts/ResumeContext';
 import { Experience, Education } from '@/types/resume';
-import { Plus, Trash2, User, Briefcase, GraduationCap, Type, Lightbulb, X } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { Plus, Trash2, User, Briefcase, GraduationCap, Type, Lightbulb, X, GripVertical } from 'lucide-react';
+import { motion, AnimatePresence, Reorder } from 'framer-motion';
 
 function generateId() {
   return Math.random().toString(36).substring(2, 9);
@@ -44,6 +44,10 @@ export default function ResumeForm() {
     }));
   };
 
+  const reorderExperience = (newOrder: Experience[]) => {
+    setResumeData((prev) => ({ ...prev, experience: newOrder }));
+  };
+
   const addEducation = () => {
     const newEdu: Education = {
       id: generateId(),
@@ -68,6 +72,10 @@ export default function ResumeForm() {
       ...prev,
       education: prev.education.filter((e) => e.id !== id),
     }));
+  };
+
+  const reorderEducation = (newOrder: Education[]) => {
+    setResumeData((prev) => ({ ...prev, education: newOrder }));
   };
 
   const [skillInput, setSkillInput] = useState('');
@@ -113,65 +121,67 @@ export default function ResumeForm() {
 
       {/* Experience */}
       <Section icon={Briefcase} title="Experience" onAdd={addExperience}>
-        <AnimatePresence mode="popLayout">
-          {resumeData.experience.map((exp) => (
-            <motion.div
-              key={exp.id}
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              className="relative space-y-3 rounded-lg border bg-muted/30 p-4"
-            >
-              <button
-                onClick={() => removeExperience(exp.id)}
-                className="absolute right-3 top-3 rounded-md p-1 text-muted-foreground transition-colors hover:text-destructive"
-              >
-                <Trash2 className="h-4 w-4" />
-              </button>
-              <div className="grid grid-cols-2 gap-3">
-                <input className={inputClass} placeholder="Company" value={exp.company} onChange={(e) => updateExperience(exp.id, 'company', e.target.value)} />
-                <input className={inputClass} placeholder="Position" value={exp.position} onChange={(e) => updateExperience(exp.id, 'position', e.target.value)} />
-                <input className={inputClass} placeholder="Start Date" value={exp.startDate} onChange={(e) => updateExperience(exp.id, 'startDate', e.target.value)} />
-                <input className={inputClass} placeholder="End Date" value={exp.endDate} onChange={(e) => updateExperience(exp.id, 'endDate', e.target.value)} />
-              </div>
-              <textarea
-                className={`${inputClass} min-h-[60px] resize-none`}
-                placeholder="Describe your responsibilities..."
-                value={exp.description}
-                onChange={(e) => updateExperience(exp.id, 'description', e.target.value)}
-              />
-            </motion.div>
-          ))}
-        </AnimatePresence>
+        {resumeData.experience.length > 0 && (
+          <Reorder.Group axis="y" values={resumeData.experience} onReorder={reorderExperience} className="space-y-3">
+            {resumeData.experience.map((exp) => (
+              <Reorder.Item key={exp.id} value={exp}>
+                <div className="relative space-y-3 rounded-lg border bg-muted/30 p-4">
+                  <div className="absolute left-2 top-3 cursor-grab text-muted-foreground/50 active:cursor-grabbing">
+                    <GripVertical className="h-4 w-4" />
+                  </div>
+                  <button
+                    onClick={() => removeExperience(exp.id)}
+                    className="absolute right-3 top-3 rounded-md p-1 text-muted-foreground transition-colors hover:text-destructive"
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </button>
+                  <div className="grid grid-cols-2 gap-3 pl-5">
+                    <input className={inputClass} placeholder="Company" value={exp.company} onChange={(e) => updateExperience(exp.id, 'company', e.target.value)} />
+                    <input className={inputClass} placeholder="Position" value={exp.position} onChange={(e) => updateExperience(exp.id, 'position', e.target.value)} />
+                    <input className={inputClass} placeholder="Start Date (e.g. Jan 2022)" value={exp.startDate} onChange={(e) => updateExperience(exp.id, 'startDate', e.target.value)} />
+                    <input className={inputClass} placeholder="End Date (or Present)" value={exp.endDate} onChange={(e) => updateExperience(exp.id, 'endDate', e.target.value)} />
+                  </div>
+                  <textarea
+                    className={`${inputClass} ml-5 min-h-[60px] w-[calc(100%-1.25rem)] resize-none`}
+                    placeholder="Describe your responsibilities..."
+                    value={exp.description}
+                    onChange={(e) => updateExperience(exp.id, 'description', e.target.value)}
+                  />
+                </div>
+              </Reorder.Item>
+            ))}
+          </Reorder.Group>
+        )}
       </Section>
 
       {/* Education */}
       <Section icon={GraduationCap} title="Education" onAdd={addEducation}>
-        <AnimatePresence mode="popLayout">
-          {resumeData.education.map((edu) => (
-            <motion.div
-              key={edu.id}
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              className="relative space-y-3 rounded-lg border bg-muted/30 p-4"
-            >
-              <button
-                onClick={() => removeEducation(edu.id)}
-                className="absolute right-3 top-3 rounded-md p-1 text-muted-foreground transition-colors hover:text-destructive"
-              >
-                <Trash2 className="h-4 w-4" />
-              </button>
-              <div className="grid grid-cols-2 gap-3">
-                <input className={inputClass} placeholder="School" value={edu.school} onChange={(e) => updateEducation(edu.id, 'school', e.target.value)} />
-                <input className={inputClass} placeholder="Degree" value={edu.degree} onChange={(e) => updateEducation(edu.id, 'degree', e.target.value)} />
-                <input className={inputClass} placeholder="Field of Study" value={edu.field} onChange={(e) => updateEducation(edu.id, 'field', e.target.value)} />
-                <input className={inputClass} placeholder="Start Date" value={edu.startDate} onChange={(e) => updateEducation(edu.id, 'startDate', e.target.value)} />
-                <input className={inputClass} placeholder="End Date" value={edu.endDate} onChange={(e) => updateEducation(edu.id, 'endDate', e.target.value)} />
-              </div>
-            </motion.div>
-          ))}
-        </AnimatePresence>
+        {resumeData.education.length > 0 && (
+          <Reorder.Group axis="y" values={resumeData.education} onReorder={reorderEducation} className="space-y-3">
+            {resumeData.education.map((edu) => (
+              <Reorder.Item key={edu.id} value={edu}>
+                <div className="relative space-y-3 rounded-lg border bg-muted/30 p-4">
+                  <div className="absolute left-2 top-3 cursor-grab text-muted-foreground/50 active:cursor-grabbing">
+                    <GripVertical className="h-4 w-4" />
+                  </div>
+                  <button
+                    onClick={() => removeEducation(edu.id)}
+                    className="absolute right-3 top-3 rounded-md p-1 text-muted-foreground transition-colors hover:text-destructive"
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </button>
+                  <div className="grid grid-cols-2 gap-3 pl-5">
+                    <input className={inputClass} placeholder="School" value={edu.school} onChange={(e) => updateEducation(edu.id, 'school', e.target.value)} />
+                    <input className={inputClass} placeholder="Degree" value={edu.degree} onChange={(e) => updateEducation(edu.id, 'degree', e.target.value)} />
+                    <input className={inputClass} placeholder="Field of Study" value={edu.field} onChange={(e) => updateEducation(edu.id, 'field', e.target.value)} />
+                    <input className={inputClass} placeholder="Start Date" value={edu.startDate} onChange={(e) => updateEducation(edu.id, 'startDate', e.target.value)} />
+                    <input className={inputClass} placeholder="End Date" value={edu.endDate} onChange={(e) => updateEducation(edu.id, 'endDate', e.target.value)} />
+                  </div>
+                </div>
+              </Reorder.Item>
+            ))}
+          </Reorder.Group>
+        )}
       </Section>
 
       {/* Skills */}
