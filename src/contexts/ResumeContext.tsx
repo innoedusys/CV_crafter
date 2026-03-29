@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { createContext, useContext } from 'react';
-import { ResumeData, TemplateType, defaultResumeData } from '@/types/resume';
+import { ResumeData, defaultResumeData } from '@/types/resume';
 
 interface ResumeContextType {
   resumeData: ResumeData;
   setResumeData: React.Dispatch<React.SetStateAction<ResumeData>>;
-  template: TemplateType;
-  setTemplate: (t: TemplateType) => void;
+  template: string;
+  setTemplate: (t: string) => void;
   isPremium: boolean;
   setIsPremium: (v: boolean) => void;
 }
@@ -29,8 +29,8 @@ export function ResumeProvider({ children }: { children: React.ReactNode }) {
     }
   });
 
-  const [template, setTemplate] = useState<TemplateType>(() => {
-    return (localStorage.getItem('resumeforge-template') as TemplateType) || 'minimal';
+  const [template, setTemplate] = useState<string>(() => {
+    return localStorage.getItem('resumeforge-template') || 'minimal-classic';
   });
 
   const [isPremium] = useState(false);
@@ -43,7 +43,7 @@ export function ResumeProvider({ children }: { children: React.ReactNode }) {
     });
   };
 
-  const updateTemplate = (t: TemplateType) => {
+  const updateTemplate = (t: string) => {
     setTemplate(t);
     localStorage.setItem('resumeforge-template', t);
   };
