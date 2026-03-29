@@ -53,9 +53,9 @@ function ContactInfo({ data, config, isSidebar }: { data: ResumeData; config: Te
 function SkillTags({ skills, config }: { skills: string[]; config: TemplateConfig }) {
   if (!skills.length) return null;
   return (
-    <div className="flex flex-wrap gap-1.5">
+    <div className="flex flex-wrap gap-2.5">
       {skills.map((s) => (
-        <span key={s} className="rounded px-2 py-0.5 text-[10px]" style={{ backgroundColor: config.colors.skillBg, color: config.colors.skillText }}>
+        <span key={s} className="rounded px-3 py-1 text-[10px]" style={{ backgroundColor: config.colors.skillBg, color: config.colors.skillText }}>
           {s}
         </span>
       ))}
@@ -68,7 +68,7 @@ function ExperienceSection({ data, config }: { data: ResumeData; config: Templat
   return (
     <div>
       <SectionHeading text="Experience" config={config} />
-      <div className={config.style.density === 'compact' ? 'space-y-2' : 'space-y-3'}>
+      <div className={config.style.density === 'compact' ? 'space-y-4' : 'space-y-5'}>
         {data.experience.map((exp) => (
           <div key={exp.id}>
             <div className="flex items-start justify-between">
@@ -80,7 +80,7 @@ function ExperienceSection({ data, config }: { data: ResumeData; config: Templat
                 {exp.startDate} – {exp.endDate || 'Present'}
               </p>
             </div>
-            {exp.description && <p className="mt-1" style={{ color: config.colors.body }}>{exp.description}</p>}
+            {exp.description && <p className="mt-1.5 leading-relaxed" style={{ color: config.colors.body }}>{exp.description}</p>}
           </div>
         ))}
       </div>
@@ -93,14 +93,14 @@ function EducationSection({ data, config }: { data: ResumeData; config: Template
   return (
     <div>
       <SectionHeading text="Education" config={config} />
-      <div className={config.style.density === 'compact' ? 'space-y-1.5' : 'space-y-2'}>
+      <div className={config.style.density === 'compact' ? 'space-y-3' : 'space-y-4'}>
         {data.education.map((edu) => (
           <div key={edu.id} className="flex items-start justify-between">
             <div>
               <p className="font-semibold" style={{ color: config.colors.heading }}>
                 {edu.degree} {edu.field && `in ${edu.field}`}
               </p>
-              <p style={{ color: config.colors.muted }}>{edu.school}</p>
+              <p className="mt-0.5" style={{ color: config.colors.muted }}>{edu.school}</p>
             </div>
             <p className="shrink-0 text-[10px]" style={{ color: config.colors.muted }}>
               {edu.startDate} – {edu.endDate || 'Present'}
@@ -127,45 +127,45 @@ function SummarySection({ data, config }: { data: ResumeData; config: TemplateCo
   return (
     <div>
       <SectionHeading text="Summary" config={config} />
-      <p style={{ color: config.colors.body }}>{data.summary}</p>
+      <p className="leading-[1.8] max-w-[95%]" style={{ color: config.colors.body }}>{data.summary}</p>
     </div>
   );
 }
 
 // ── Layout: Single Column ──
 function SingleColumnLayout({ data, config, showWatermark }: Props) {
-  const padding = config.style.density === 'compact' ? 'p-6' : 'p-8';
-  const gap = config.style.density === 'compact' ? 'space-y-3' : config.style.density === 'relaxed' ? 'space-y-6' : 'space-y-5';
+  const padding = config.style.density === 'compact' ? 'p-8' : 'p-10';
+  const gap = config.style.density === 'compact' ? 'space-y-6' : config.style.density === 'relaxed' ? 'space-y-10' : 'space-y-8';
   const isDark = config.id === 'creative-dark';
   const nameSize = config.style.nameSize === '2xl' ? 'text-2xl' : config.style.nameSize === 'xl' ? 'text-xl' : 'text-lg';
 
   return (
     <div
-      className={`resume-content flex flex-col ${padding} text-[11px] leading-relaxed`}
+      className={`resume-content flex flex-col justify-between ${padding} text-[11px] leading-relaxed`}
       style={{ backgroundColor: isDark ? '#1e293b' : '#fff', fontFamily: "'DM Sans', sans-serif", minHeight: '297mm' }}
     >
       {/* Accent bar for creative-accent */}
       {config.id === 'creative-accent' && (
         <div className="h-1.5 w-16 rounded-full" style={{ backgroundColor: config.colors.primary }} />
       )}
-      <div style={{ borderBottom: `1px solid ${config.colors.border}`, paddingBottom: 16 }}>
+      <div style={{ borderBottom: `1px solid ${config.colors.border}`, paddingBottom: 20 }}>
         <h1 className={`${nameSize} font-bold tracking-tight`} style={{ color: config.colors.primary }}>
           {data.personalInfo.fullName || 'Your Name'}
         </h1>
         {data.personalInfo.jobTitle && (
-          <p className="mt-1 text-sm" style={{ color: config.colors.muted }}>{data.personalInfo.jobTitle}</p>
+          <p className="mt-1.5 text-sm" style={{ color: config.colors.muted }}>{data.personalInfo.jobTitle}</p>
         )}
-        <div className="mt-2">
+        <div className="mt-3">
           <ContactInfo data={data} config={config} />
         </div>
       </div>
-      <div className={`${gap} flex-1`}>
+      <div className={`${gap} flex-1 pt-6`}>
         <SummarySection data={data} config={config} />
         <ExperienceSection data={data} config={config} />
         <EducationSection data={data} config={config} />
         <SkillsSection data={data} config={config} />
       </div>
-      {showWatermark && <p className="mt-auto pt-4 text-center text-[9px]" style={{ color: config.colors.muted }}>Created with ResumeForge</p>}
+      {showWatermark && <p className="mt-auto pt-6 text-center text-[9px]" style={{ color: config.colors.muted }}>Created with ResumeForge</p>}
     </div>
   );
 }
@@ -177,42 +177,47 @@ function SidebarLayout({ data, config, showWatermark }: Props) {
   const sidebarText = config.colors.sidebarText || '#e0e0e0';
   const sidebarAccent = config.colors.sidebarAccent || config.colors.accent;
   const nameSize = config.style.nameSize === '2xl' ? 'text-xl' : config.style.nameSize === 'xl' ? 'text-lg' : 'text-base';
-  const density = config.style.density === 'compact' ? 'space-y-3' : 'space-y-5';
+  const density = config.style.density === 'compact' ? 'space-y-5' : 'space-y-7';
   const lightSidebar = isLightColor(sidebarBg);
 
   const sidebar = (
-    <div className={`w-[35%] ${density} p-6`} style={{ backgroundColor: sidebarBg, color: sidebarText, fontFamily: "'DM Sans', sans-serif" }}>
-      <div>
-        <h1 className={`${nameSize} font-bold`} style={{ color: lightSidebar ? config.colors.heading : '#fff' }}>
-          {data.personalInfo.fullName || 'Your Name'}
-        </h1>
-        {data.personalInfo.jobTitle && (
-          <p className="mt-1 text-xs" style={{ color: sidebarAccent }}>{data.personalInfo.jobTitle}</p>
+    <div className={`w-[35%] flex flex-col justify-between ${density} p-8`} style={{ backgroundColor: sidebarBg, color: sidebarText, fontFamily: "'DM Sans', sans-serif" }}>
+      <div className={density}>
+        <div>
+          <h1 className={`${nameSize} font-bold`} style={{ color: lightSidebar ? config.colors.heading : '#fff' }}>
+            {data.personalInfo.fullName || 'Your Name'}
+          </h1>
+          {data.personalInfo.jobTitle && (
+            <p className="mt-1.5 text-xs" style={{ color: sidebarAccent }}>{data.personalInfo.jobTitle}</p>
+          )}
+        </div>
+        <ContactInfo data={data} config={config} isSidebar />
+        {data.skills.length > 0 && (
+          <div>
+            <h2 className="mb-3 text-xs font-bold uppercase tracking-wider" style={{ color: sidebarAccent }}>Skills</h2>
+            <div className="flex flex-wrap gap-2">
+              {data.skills.map((s) => (
+                <span key={s} className="rounded px-2.5 py-1 text-[10px]"
+                  style={{ backgroundColor: lightSidebar ? config.colors.skillBg : `${sidebarAccent}22`, color: lightSidebar ? config.colors.skillText : sidebarText }}>
+                  {s}
+                </span>
+              ))}
+            </div>
+          </div>
         )}
       </div>
-      <ContactInfo data={data} config={config} isSidebar />
-      {data.skills.length > 0 && (
-        <div>
-          <h2 className="mb-2 text-xs font-bold uppercase tracking-wider" style={{ color: sidebarAccent }}>Skills</h2>
-          <div className="flex flex-wrap gap-1.5">
-            {data.skills.map((s) => (
-              <span key={s} className="rounded px-2 py-0.5 text-[10px]"
-                style={{ backgroundColor: lightSidebar ? config.colors.skillBg : `${sidebarAccent}22`, color: lightSidebar ? config.colors.skillText : sidebarText }}>
-                {s}
-              </span>
-            ))}
-          </div>
-        </div>
-      )}
+      <div />
     </div>
   );
 
   const main = (
-    <div className={`flex-1 ${density} p-6 text-[11px] leading-relaxed`} style={{ fontFamily: "'DM Sans', sans-serif" }}>
-      <SummarySection data={data} config={config} />
-      <ExperienceSection data={data} config={config} />
-      <EducationSection data={data} config={config} />
-      {showWatermark && <p className="pt-4 text-center text-[9px]" style={{ color: config.colors.muted }}>Created with ResumeForge</p>}
+    <div className={`flex-1 flex flex-col justify-between ${density} p-8 text-[11px] leading-relaxed`} style={{ fontFamily: "'DM Sans', sans-serif" }}>
+      <div className={density}>
+        <SummarySection data={data} config={config} />
+        <ExperienceSection data={data} config={config} />
+        <EducationSection data={data} config={config} />
+      </div>
+      {showWatermark && <p className="pt-6 text-center text-[9px]" style={{ color: config.colors.muted }}>Created with ResumeForge</p>}
     </div>
   );
 
@@ -227,30 +232,30 @@ function SidebarLayout({ data, config, showWatermark }: Props) {
 function TopHeaderLayout({ data, config, showWatermark }: Props) {
   const headerBg = config.colors.headerBg || config.colors.primary;
   const headerText = config.colors.headerText || '#fff';
-  const density = config.style.density === 'compact' ? 'space-y-3' : 'space-y-5';
+  const density = config.style.density === 'compact' ? 'space-y-6' : 'space-y-8';
   const nameSize = config.style.nameSize === '2xl' ? 'text-2xl' : config.style.nameSize === 'xl' ? 'text-xl' : 'text-lg';
 
   return (
-    <div className="resume-content flex flex-col text-[11px] leading-relaxed" style={{ fontFamily: "'DM Sans', sans-serif", minHeight: '297mm' }}>
-      <div className="p-8 text-center" style={{ backgroundColor: headerBg, color: headerText }}>
+    <div className="resume-content flex flex-col justify-between text-[11px] leading-relaxed" style={{ fontFamily: "'DM Sans', sans-serif", minHeight: '297mm' }}>
+      <div className="p-10 text-center" style={{ backgroundColor: headerBg, color: headerText }}>
         <h1 className={`${nameSize} font-bold tracking-tight`}>
           {data.personalInfo.fullName || 'Your Name'}
         </h1>
-        {data.personalInfo.jobTitle && <p className="mt-1 text-sm opacity-80">{data.personalInfo.jobTitle}</p>}
-        <div className="mt-3 flex flex-wrap justify-center gap-4 text-[10px] opacity-75">
+        {data.personalInfo.jobTitle && <p className="mt-1.5 text-sm opacity-80">{data.personalInfo.jobTitle}</p>}
+        <div className="mt-4 flex flex-wrap justify-center gap-5 text-[10px] opacity-75">
           {data.personalInfo.email && <span>{data.personalInfo.email}</span>}
           {data.personalInfo.phone && <span>{data.personalInfo.phone}</span>}
           {data.personalInfo.location && <span>{data.personalInfo.location}</span>}
           {data.personalInfo.website && <span>{data.personalInfo.website}</span>}
         </div>
       </div>
-      <div className={`${density} flex-1 p-8`}>
+      <div className={`${density} flex-1 p-10`}>
         <SummarySection data={data} config={config} />
         <ExperienceSection data={data} config={config} />
         <EducationSection data={data} config={config} />
         <SkillsSection data={data} config={config} />
       </div>
-      {showWatermark && <p className="p-8 pt-0 text-center text-[9px]" style={{ color: config.colors.muted }}>Created with ResumeForge</p>}
+      {showWatermark && <p className="px-10 pb-8 text-center text-[9px]" style={{ color: config.colors.muted }}>Created with ResumeForge</p>}
     </div>
   );
 }
