@@ -1,6 +1,7 @@
+import { useState } from 'react';
 import { useResume } from '@/contexts/ResumeContext';
 import { Experience, Education } from '@/types/resume';
-import { Plus, Trash2, User, Briefcase, GraduationCap, Type, Lightbulb } from 'lucide-react';
+import { Plus, Trash2, User, Briefcase, GraduationCap, Type, Lightbulb, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 function generateId() {
@@ -69,11 +70,18 @@ export default function ResumeForm() {
     }));
   };
 
-  const updateSkills = (value: string) => {
-    setResumeData((prev) => ({
-      ...prev,
-      skills: value.split(',').map((s) => s.trim()).filter(Boolean),
-    }));
+  const [skillInput, setSkillInput] = useState('');
+
+  const addSkill = () => {
+    const trimmed = skillInput.trim();
+    if (!trimmed) return;
+    if (resumeData.skills.includes(trimmed)) { setSkillInput(''); return; }
+    setResumeData((prev) => ({ ...prev, skills: [...prev.skills, trimmed] }));
+    setSkillInput('');
+  };
+
+  const removeSkill = (skill: string) => {
+    setResumeData((prev) => ({ ...prev, skills: prev.skills.filter((s) => s !== skill) }));
   };
 
   const inputClass =
@@ -168,12 +176,41 @@ export default function ResumeForm() {
 
       {/* Skills */}
       <Section icon={Lightbulb} title="Skills">
-        <input
-          className={inputClass}
-          placeholder="e.g. JavaScript, React, TypeScript (comma separated)"
-          value={resumeData.skills.join(', ')}
-          onChange={(e) => updateSkills(e.target.value)}
-        />
+        <div className="flex gap-2">
+          <input
+            className={`${inputClass} flex-1`}
+            placeholder="e.g. JavaScript"
+            value={skillInput}
+            onChange={(e) => setSkillInput(e.target.value)}
+            onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); addSkill(); } }}
+          />
+          <button
+            onClick={addSkill}
+            className="inline-flex items-center gap-1 rounded-lg bg-primary/10 px-3 py-2 text-xs font-medium text-primary transition-colors hover:bg-primary/20"
+          >
+            <Plus className="h-3 w-3" /> Add
+          </button>
+        </div>
+        {resumeData.skills.length > 0 && (
+          <div className="flex flex-wrap gap-2 pt-1">
+            <AnimatePresence>
+              {resumeData.skills.map((skill) => (
+                <motion.span
+                  key={skill}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.8 }}
+                  className="inline-flex items-center gap-1 rounded-full bg-primary/10 px-2.5 py-1 text-xs font-medium text-primary"
+                >
+                  {skill}
+                  <button onClick={() => removeSkill(skill)} className="rounded-full p-0.5 transition-colors hover:bg-primary/20">
+                    <X className="h-3 w-3" />
+                  </button>
+                </motion.span>
+              ))}
+            </AnimatePresence>
+          </div>
+        )}
       </Section>
     </div>
   );
