@@ -15,8 +15,9 @@ function BuilderContent() {
   const [exporting, setExporting] = useState(false);
 
   const handleDownload = async () => {
-    const premiumTemplates = ['modern', 'professional'];
-    if (!isPremium && premiumTemplates.includes(template)) {
+    const { getTemplate } = await import('@/lib/templates');
+    const config = getTemplate(template);
+    if (!isPremium && config.premium) {
       setShowUpgrade(true);
       return;
     }

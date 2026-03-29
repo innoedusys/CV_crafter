@@ -1,16 +1,16 @@
 import { useResume } from '@/contexts/ResumeContext';
-import { MinimalTemplate, ModernTemplate, ProfessionalTemplate } from './ResumeTemplates';
+import { getTemplate } from '@/lib/templates';
+import TemplateRenderer from './templates/TemplateRenderer';
 
 export default function ResumePreview() {
   const { resumeData, template, isPremium } = useResume();
+  const config = getTemplate(template);
   const showWatermark = !isPremium;
 
   return (
     <div className="flex h-full items-start justify-center overflow-y-auto bg-muted/50 p-6">
       <div className="w-[595px] min-h-[842px] bg-white shadow-elevated rounded-sm" id="resume-preview">
-        {template === 'minimal' && <MinimalTemplate data={resumeData} showWatermark={showWatermark} />}
-        {template === 'modern' && <ModernTemplate data={resumeData} showWatermark={showWatermark} />}
-        {template === 'professional' && <ProfessionalTemplate data={resumeData} showWatermark={showWatermark} />}
+        <TemplateRenderer data={resumeData} config={config} showWatermark={showWatermark} />
       </div>
     </div>
   );
