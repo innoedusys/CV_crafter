@@ -33,8 +33,6 @@ export interface ResumeData {
   skills: string[];
 }
 
-export type TemplateType = 'minimal' | 'modern' | 'professional';
-
 export const defaultResumeData: ResumeData = {
   personalInfo: {
     fullName: '',
