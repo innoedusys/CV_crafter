@@ -1,17 +1,34 @@
 import { useResume } from '@/contexts/ResumeContext';
 import { getTemplate } from '@/lib/templates';
 import TemplateRenderer from './templates/TemplateRenderer';
+import { getDisplayData } from '@/utils/generator';
+import PreviewWrapper from './PreviewWrapper';
 
 export default function ResumePreview() {
   const { resumeData, template, isPremium } = useResume();
   const config = getTemplate(template);
   const showWatermark = !isPremium;
 
+  // Always display a fully-populated CV — never empty
+  const displayData = getDisplayData(resumeData);
+
   return (
-    <div className="flex h-full items-start justify-center overflow-y-auto bg-muted/50 p-6">
-      <div className="w-[210mm] min-h-[297mm] bg-white shadow-elevated rounded-sm" id="resume-preview" style={{ aspectRatio: '210 / 297' }}>
-        <TemplateRenderer data={resumeData} config={config} showWatermark={showWatermark} />
+    <PreviewWrapper>
+      <div
+        id="cv-paper"
+        className="relative shadow-elevated overflow-hidden bg-white rounded-[2px]"
+        style={{
+          width: '794px',
+          height: '1123px',   
+          backgroundColor: '#ffffff'
+        }}
+      >
+        <TemplateRenderer 
+          data={displayData} 
+          config={config} 
+          showWatermark={showWatermark} 
+        />
       </div>
-    </div>
+    </PreviewWrapper>
   );
 }

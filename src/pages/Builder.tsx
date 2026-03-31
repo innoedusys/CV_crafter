@@ -1,8 +1,7 @@
-import { useState, useCallback } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Download, FileText, ArrowLeft, Crown, RotateCcw, Copy, History, X } from 'lucide-react';
-import html2canvas from 'html2canvas-pro';
-import { jsPDF } from 'jspdf';
+import { exportToPDF } from '@/utils/pdfExport';
 import { ResumeProvider, useResume } from '@/contexts/ResumeContext';
 import ResumeForm from '@/components/ResumeForm';
 import ResumePreview from '@/components/ResumePreview';
@@ -41,23 +40,10 @@ function BuilderContent() {
 
     setExporting(true);
     try {
-      const el = document.getElementById('resume-preview');
+      const el = document.getElementById('cv-paper');
       if (!el) return;
 
-      const canvas = await html2canvas(el, {
-        scale: 2,
-        useCORS: true,
-        backgroundColor: '#ffffff',
-      });
-
-      const imgData = canvas.toDataURL('image/png');
-      const pdf = new jsPDF('p', 'mm', 'a4');
-      const pdfWidth = pdf.internal.pageSize.getWidth();
-      const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
-
-      pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-      const filename = `resume-${Date.now()}.pdf`;
-      pdf.save(filename);
+      await exportToPDF({ element: el, filename: `resume-${template}` });
 
       // Save to download history
       const record: DownloadRecord = {
