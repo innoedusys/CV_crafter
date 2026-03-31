@@ -5,15 +5,15 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 const features = [
-  { icon: Zap, title: 'Lightning Fast', description: 'Create your resume in under 5 minutes with our intuitive builder.' },
-  { icon: FileText, title: 'ATS-Friendly', description: 'Optimized layouts that pass Applicant Tracking Systems every time.' },
-  { icon: Sparkles, title: 'Professional Templates', description: 'Choose from beautifully crafted templates designed by hiring experts.' },
+  { icon: Zap, title: 'Yashin Tezligida', description: 'Intuitiv yig\'uvchimiz bilan 5 daqiqadan kamroq vaqt ichida rezyumengizni yarating.' },
+  { icon: FileText, title: 'ATS-ga Mos', description: 'Har doim talabgorlarni kuzatish tizimlaridan o\'tadigan optimallashtirilgan namunalar.' },
+  { icon: Sparkles, title: 'Professional Namunalar', description: 'Yollash bo\'yicha mutaxassislar tomonidan ishlab chiqilgan chiroyli namunalardan tanlang.' },
 ];
 
 const templates = [
-  { name: 'Minimal', style: 'Clean & simple', color: 'bg-background' },
-  { name: 'Modern', style: 'Bold & creative', color: 'bg-primary/5' },
-  { name: 'Professional', style: 'Classic & polished', color: 'bg-muted' },
+  { name: 'Minimalist', style: 'Toza va oddiy', color: 'bg-background' },
+  { name: 'Zamonaviy', style: 'Qalin va ijodiy', color: 'bg-primary/5' },
+  { name: 'Professional', style: 'Klassik va silliq', color: 'bg-muted' },
 ];
 
 export default function LandingPage() {
@@ -32,22 +32,21 @@ export default function LandingPage() {
           >
             <div className="mx-auto mb-6 inline-flex items-center gap-2 rounded-full border bg-card px-4 py-1.5 text-sm text-muted-foreground shadow-card">
               <Sparkles className="h-4 w-4 text-primary" />
-              Free forever · No sign-up required
+              Sira bepul · Ro'yxatdan o'tish talab qilinmaydi
             </div>
             <h1 className="mx-auto max-w-3xl text-4xl font-normal leading-tight sm:text-5xl lg:text-6xl">
-              Create a Professional{' '}
-              <span className="text-gradient">Resume in Minutes</span>
+              Professional{' '}
+              <span className="text-gradient">Rezyumeni Daqiqalar Ichida Yarating</span>
             </h1>
             <p className="mx-auto mt-6 max-w-xl text-lg text-muted-foreground">
-              Free, fast, and ATS-friendly resume builder. Stand out from the crowd
-              and land your dream job.
+              Bepul, tez va ATS-ga mos rezyume yig'uvchi. Olomondan ajralib turing va orzuingizdagi ishga joylashing.
             </p>
             <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
               <Link
                 to="/builder"
                 className="group inline-flex items-center gap-2 rounded-xl bg-primary px-8 py-3.5 text-base font-semibold text-primary-foreground shadow-glow transition-all hover:scale-[1.02] hover:shadow-lg"
               >
-                Build My Resume
+                Rezyumemni Yaratish
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
               </Link>
             </div>
@@ -64,9 +63,9 @@ export default function LandingPage() {
             viewport={{ once: true }}
             className="text-center"
           >
-            <h2 className="text-3xl lg:text-4xl">Beautiful Templates</h2>
+            <h2 className="text-3xl lg:text-4xl">Chiroyli Namunalar</h2>
             <p className="mx-auto mt-4 max-w-lg text-muted-foreground">
-              Choose a template and customize it to match your style. Switch instantly.
+              Namuna tanlang va uni uslubingizga moslang. Darhol o'zgartiring.
             </p>
           </motion.div>
           <div className="mt-16 grid gap-8 md:grid-cols-3">
@@ -133,19 +132,19 @@ export default function LandingPage() {
       <section className="border-t bg-card py-24">
         <div className="container">
           <div className="text-center">
-            <h2 className="text-3xl lg:text-4xl">Simple Pricing</h2>
+            <h2 className="text-3xl lg:text-4xl">Oddiy Narxlar</h2>
             <p className="mx-auto mt-4 max-w-md text-muted-foreground">
-              Get started for free. Upgrade when you need more.
+              Bepul boshlang. Ko'proq kerak bo'lganda yangilang.
             </p>
           </div>
           <div className="mx-auto mt-16 grid max-w-3xl gap-8 md:grid-cols-2">
             {/* Free */}
             <div className="rounded-xl border bg-background p-8 shadow-card">
-              <p className="font-display text-2xl">Free</p>
-              <p className="mt-1 text-muted-foreground text-sm">Perfect for getting started</p>
+              <p className="font-display text-2xl">Bepul</p>
+              <p className="mt-1 text-muted-foreground text-sm">Boshlash uchun ajoyib</p>
               <p className="mt-6 font-display text-4xl">$0</p>
               <ul className="mt-8 space-y-3">
-                {['Basic template', 'Live preview', 'PDF download', 'Watermark included'].map((item) => (
+                {['Asosiy namuna', 'Jonli ko\'rib chiqish', 'PDF yuklab olish', 'Suv belgisi mavjud'].map((item) => (
                   <li key={item} className="flex items-center gap-2 text-sm">
                     <CheckCircle className="h-4 w-4 text-success" />
                     {item}
@@ -156,19 +155,19 @@ export default function LandingPage() {
                 to="/builder"
                 className="mt-8 block rounded-lg border px-6 py-2.5 text-center text-sm font-medium transition-colors hover:bg-muted"
               >
-                Get Started
+                Boshlash
               </Link>
             </div>
             {/* Pro */}
             <div className="relative rounded-xl border-2 border-primary bg-background p-8 shadow-glow">
               <div className="absolute -top-3 right-6 rounded-full bg-primary px-3 py-0.5 text-xs font-semibold text-primary-foreground">
-                Popular
+                Mashhur
               </div>
               <p className="font-display text-2xl">Pro</p>
-              <p className="mt-1 text-muted-foreground text-sm">For serious job seekers</p>
-              <p className="mt-6 font-display text-4xl">$9<span className="text-lg text-muted-foreground">/mo</span></p>
+              <p className="mt-1 text-muted-foreground text-sm">Jiddiy ish qidiruvchilar uchun</p>
+              <p className="mt-6 font-display text-4xl">$9<span className="text-lg text-muted-foreground">/oy</span></p>
               <ul className="mt-8 space-y-3">
-                {['All templates', 'No watermark', 'Priority support', 'Custom colors', 'Multiple resumes'].map((item) => (
+                {['Barcha namunalar', 'Suv belgisi yo\'q', 'Ustuvor yordam', 'Maxsus ranglar', 'Cheksiz rezyumelar'].map((item) => (
                   <li key={item} className="flex items-center gap-2 text-sm">
                     <CheckCircle className="h-4 w-4 text-success" />
                     {item}
@@ -176,7 +175,7 @@ export default function LandingPage() {
                 ))}
               </ul>
               <button className="mt-8 w-full rounded-lg bg-primary px-6 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90">
-                Upgrade to Pro
+                Pro-ga Yangilash
               </button>
             </div>
           </div>
@@ -186,15 +185,15 @@ export default function LandingPage() {
       {/* CTA */}
       <section className="py-24">
         <div className="container text-center">
-          <h2 className="text-3xl lg:text-4xl">Ready to Land Your Dream Job?</h2>
+          <h2 className="text-3xl lg:text-4xl">Orzuingizdagi Ishga Joylashishga Tayyormisiz?</h2>
           <p className="mx-auto mt-4 max-w-md text-muted-foreground">
-            Join thousands of job seekers who got hired with ResumeForge.
+            ResumeForge bilan ishga qabul qilingan minglab insonlar safiga qo'shiling.
           </p>
           <Link
             to="/builder"
             className="mt-8 inline-flex items-center gap-2 rounded-xl bg-primary px-8 py-3.5 font-semibold text-primary-foreground shadow-glow transition-all hover:scale-[1.02]"
           >
-            Build My Resume Now
+            Hozir Rezyumemni Yaratish
             <ArrowRight className="h-4 w-4" />
           </Link>
         </div>

@@ -62,7 +62,7 @@ function BuilderContent() {
   };
 
   const handleReset = () => {
-    if (!confirm('Are you sure you want to clear all resume data? This cannot be undone.')) return;
+    if (!confirm('Barcha ma\'lumotlarni o\'chirishga ishonchingiz komilmi? Buni bekor qilib bo\'lmaydi.')) return;
     setResumeData(defaultResumeData);
   };
 
@@ -77,7 +77,7 @@ function BuilderContent() {
     };
     const updated = [dup, ...duplicates].slice(0, 10);
     localStorage.setItem('resumeforge-duplicates', JSON.stringify(updated));
-    alert('Resume duplicated! You can load saved copies from the "Saved Copies" section.');
+    alert('Rezyume nushasi yaratildi! Saqlangan nushalarni huddi shu yerdan yuklashingiz mumkin.');
   };
 
   return (
@@ -92,27 +92,27 @@ function BuilderContent() {
             <FileText className="h-5 w-5 text-primary" />
             <span className="font-display text-lg">ResumeForge</span>
           </div>
-          <span className="rounded-full bg-success/10 px-2 py-0.5 text-[10px] font-medium text-green-600">Auto-saved</span>
+          <span className="rounded-full bg-success/10 px-2 py-0.5 text-[10px] font-medium text-green-600">Avto-saqlangan</span>
         </div>
         <div className="flex items-center gap-2">
           <button
             onClick={handleReset}
             className="inline-flex items-center gap-1.5 rounded-lg border px-3 py-2 text-xs font-medium text-muted-foreground transition-colors hover:bg-muted"
-            title="Reset form"
+            title="Shaklni tozalash"
           >
             <RotateCcw className="h-3.5 w-3.5" />
           </button>
           <button
             onClick={handleDuplicate}
             className="inline-flex items-center gap-1.5 rounded-lg border px-3 py-2 text-xs font-medium text-muted-foreground transition-colors hover:bg-muted"
-            title="Duplicate resume"
+            title="Nusha ko'chirish"
           >
             <Copy className="h-3.5 w-3.5" />
           </button>
           <button
             onClick={() => setShowHistory(!showHistory)}
             className="relative inline-flex items-center gap-1.5 rounded-lg border px-3 py-2 text-xs font-medium text-muted-foreground transition-colors hover:bg-muted"
-            title="Download history"
+            title="Yuklashlar tarixi"
           >
             <History className="h-3.5 w-3.5" />
             {downloadHistory.length > 0 && (
@@ -127,7 +127,7 @@ function BuilderContent() {
               className="inline-flex items-center gap-1.5 rounded-lg border px-3 py-2 text-xs font-medium text-muted-foreground transition-colors hover:bg-muted"
             >
               <Crown className="h-3.5 w-3.5" />
-              Upgrade to Pro
+              Pro-ga Yangilash
             </button>
           )}
           <button
@@ -136,7 +136,7 @@ function BuilderContent() {
             className="inline-flex items-center gap-1.5 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 disabled:opacity-50"
           >
             <Download className="h-4 w-4" />
-            {exporting ? 'Exporting...' : 'Download PDF'}
+            {exporting ? 'Yuklanmoqda...' : 'PDF Yuklash'}
           </button>
         </div>
       </div>
@@ -164,13 +164,13 @@ function BuilderContent() {
                 className="absolute right-4 top-4 z-10 w-72 rounded-lg border bg-card p-4 shadow-elevated"
               >
                 <div className="mb-3 flex items-center justify-between">
-                  <h4 className="text-sm font-semibold text-foreground">Download History</h4>
+                  <h4 className="text-sm font-semibold text-foreground">Yuklashlar Tarixi</h4>
                   <button onClick={() => setShowHistory(false)} className="rounded p-1 text-muted-foreground hover:bg-muted">
                     <X className="h-4 w-4" />
                   </button>
                 </div>
                 {downloadHistory.length === 0 ? (
-                  <p className="text-xs text-muted-foreground">No downloads yet.</p>
+                  <p className="text-xs text-muted-foreground">Hali yuklashlar yo'q.</p>
                 ) : (
                   <div className="max-h-60 space-y-2 overflow-y-auto">
                     {downloadHistory.map((record) => (

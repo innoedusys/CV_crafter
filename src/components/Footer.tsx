@@ -10,10 +10,10 @@ export default function Footer() {
             ResumeForge
           </div>
           <p className="max-w-md text-sm text-muted-foreground">
-            Build a professional resume online in minutes. Free and ATS-friendly.
+            Daqiqalar ichida professional rezyumeni onlayn yarating. Bepul va ATS-ga mos.
           </p>
           <p className="text-xs text-muted-foreground">
-            © {new Date().getFullYear()} ResumeForge. All rights reserved.
+            © {new Date().getFullYear()} ResumeForge. Barcha huquqlar himoyalangan.
           </p>
         </div>
       </div>
